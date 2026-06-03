@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMTV - HOME</title>
+    <link rel="stylesheet" href="style-home.css">
+</head>
+
+<body>
+
+<audio id="introSound">
+    <source src="intro-sound.mp3" type="audio/mp3">
+</audio>
+
+<!-- INTRO LOGO -->
+<div class="intro-screen">
+    <img src="logo-lmtv.png" class="intro-logo">
+</div>
+
+<!-- BACKGROUND VIDEO -->
+<video autoplay muted loop playsinline id="bgVideo">
+    <source src="background.mp4" type="video/mp4">
+</video>
+
+<div class="overlay"></div>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="nav-left">
+        <img src="logo-lmtv.png" class="nav-logo-small">
+    </div>
+
+    <div class="nav-right">
+        <button class="menu-btn" id="menuBtn">☰ MENU</button>
+    </div>
+</div>
+
+<!-- MENU DROPDOWN -->
+<div class="menu-panel" id="menuPanel">
+    <a href="index.html">🏠 HOME</a>
+    <a href="livetv.html">📺 LIVE TV</a>
+    <a href="movies.html">🎬 MOVIES</a>
+    <a href="videos.html">🎞️ VIDEOS</a>
+    <a href="cartoons.html">🧸 CARTOONS</a>
+    <a href="musics.html">🎵 MUSICS</a>
+    <a href="adults.html" id="adultLink">🔞 ADULTS</a>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="home-center">
+
+    <h1 class="home-title scroll-animate">WELCOME TO LE MAIRE TV</h1>
+
+    <div class="home-logo-glow scroll-animate">
+        <img src="logo-lmtv.png" class="home-logo-big">
+    </div>
+
+    <p class="home-subtitle scroll-animate">Connecting You to the World!</p>
+
+    <div class="home-buttons scroll-animate">
+        <a href="livetv.html" class="btn-left">📺 LIVE TV</a>
+        <a href="movies.html" class="btn-right">🎬 MOVIES</a>
+    </div>
+
+</div>
+
+<!-- HAVE FUN SECTION -->
+<section class="fun-section scroll-animate">
+    <h2 class="fun-title">HAVE FUN</h2>
+
+    <div class="fun-video-box zoom-animate">
+        <video id="funPlayer" muted loop playsinline controls class="fun-video">
+            <source id="funSource" src="" type="video/mp4">
+        </video>
+    </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer class="footer scroll-animate">
+    <img src="logo-lmtv.png" class="footer-logo">
+    <p>@2026 LMTV - Le Maire TV – Another Way to See the World.</p>
+</footer>
+
+<!-- POPUP ADULT PIN -->
+<div id="adultPinModal" class="pin-modal">
+  <div class="pin-box">
+      <h2>Enter PIN</h2>
+
+      <input id="adultPinInput" type="password" maxlength="6" placeholder="Enter PIN">
+
+      <p id="adultPinError" class="pin-error">Incorrect PIN</p>
+
+      <div class="pin-buttons">
+          <button id="adultPinUnlock" class="pin-btn">Unlock</button>
+          <button id="adultPinClose" class="pin-btn pin-close">Close</button>
+      </div>
+  </div>
+</div>
+
+<!-- MENU SCRIPT -->
+<script>
+document.getElementById("menuBtn").addEventListener("click", function() {
+    document.getElementById("menuPanel").classList.toggle("show");
+});
+</script>
+
+<!-- SCROLL ANIMATION -->
+<script>
+const elements = document.querySelectorAll('.scroll-animate, .zoom-animate');
+
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+        }
+    });
+}, { threshold: 0.2 });
+
+elements.forEach(el => observer.observe(el));
+</script>
+
+<!-- HAVE FUN VIDEO SCRIPT -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const funVideos = [
+        "HAVE_FUN/video1.mp4",
+        "HAVE_FUN/video2.mp4",
+        "HAVE_FUN/video3.mp4",
+        "HAVE_FUN/video4.mp4"
+    ];
+
+    let randomVideo = funVideos[Math.floor(Math.random() * funVideos.length)];
+
+    const source = document.getElementById("funSource");
+    const player = document.getElementById("funPlayer");
+
+    source.src = randomVideo;
+    player.load();
+
+    // Fòse videyo a jwe lè li fin chaje
+    player.onloadeddata = () => {
+        const tryPlay = () => {
+            player.play().catch(() => {
+                setTimeout(tryPlay, 200);
+            });
+        };
+        tryPlay();
+    };
+});
+</script>
+
+<!-- INTRO SCRIPT — JWE SELMAN LÈ SIT LA OUVRI -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const intro = document.querySelector(".intro-screen");
+    const sound = document.getElementById("introSound");
+
+    // JWE SELMAN LÈ SIT LA OUVRI
+    if (!sessionStorage.getItem("introPlayed")) {
+
+        // jwe son an (Solisyon #1)
+        sound.volume = 0.7;
+        sound.play().catch(() => {
+            console.log("Autoplay blocked. Will play after first click.");
+        });
+
+        // kite intro a jwe pou 2.5s
+        setTimeout(() => {
+            intro.classList.add("hide");
+            document.body.classList.add("intro-done");
+        }, 2500);
+
+        sessionStorage.setItem("introPlayed", "yes");
+
+    } else {
+        intro.style.display = "none";
+        document.body.classList.add("intro-done");
+    }
+
+});
+</script>
+
+<!-- ADULT PIN SCRIPT -->
+<script>
+document.getElementById("adultLink").addEventListener("click", function(e) {
+    e.preventDefault();
+    document.getElementById("adultPinModal").style.display = "flex";
+});
+
+document.getElementById("adultPinClose").onclick = () => {
+    document.getElementById("adultPinModal").style.display = "none";
+};
+
+document.getElementById("adultPinUnlock").onclick = () => {
+    const pin = document.getElementById("adultPinInput").value;
+
+    if (pin === "062026") {
+        window.location.href = "adults.html";
+    } else {
+        document.getElementById("adultPinError").style.display = "block";
+    }
+};
+</script>
+
+</body>
+</html>

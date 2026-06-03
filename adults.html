@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LE MAIRE TV - Adults</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- POPUP ADULT PIN (PA SÈVI NAN PAJ SA A, MEN NOU KITE L SI OU VLE RELANSE PIN AN) -->
+<div id="adultPinModal" class="pin-modal" style="display:none;">
+  <div class="pin-box">
+      <h2>Enter PIN</h2>
+
+      <input id="adultPinInput" type="password" maxlength="6" placeholder="Enter PIN">
+
+      <p id="adultPinError" class="pin-error">Incorrect PIN</p>
+
+      <div class="pin-buttons">
+          <button id="adultPinUnlock" class="pin-btn">Unlock</button>
+          <button id="adultPinClose" class="pin-btn pin-close">Close</button>
+      </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="nav-left">
+        <img src="logo-lmtv.png" class="nav-logo">
+        <span class="nav-title">LE MAIRE TV ADULTS</span>
+    </div>
+    <div class="nav-right"></div>
+</div>
+
+<!-- PAGE WRAPPER -->
+<div class="section-wrapper">
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <button class="menu-btn" id="menuBtn">☰ MENU</button>
+
+        <div class="inside" id="menuPanel">
+            <a class="nav-item" href="index.html">🏠 HOME</a>
+            <a class="nav-item" href="livetv.html">📺 LIVE TV</a>
+            <a class="nav-item" href="movies.html">🎬 MOVIES</a>
+            <a class="nav-item" href="videos.html">🎞️ VIDEOS</a>
+            <a class="nav-item" href="cartoons.html">🧸 CARTOONS</a>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search adults...">
+            <div class="search-suggestions" id="searchSuggestions"></div>
+        </div>
+    </div>
+
+    <!-- MAIN LAYOUT -->
+    <div class="video-layout">
+
+        <!-- PLAYER -->
+        <div class="player-box">
+            <video id="player" controls></video>
+        </div>
+
+        <!-- RIGHT PANEL -->
+        <div class="list-panel">
+
+            <div class="list-header">
+                <button id="btnBack" class="nav-folder-btn">⬅ Back</button>
+                <button id="btnRoot" class="nav-folder-btn">🏠 Root</button>
+                <span id="currentPathLabel" class="path-label"></span>
+            </div>
+
+            <div class="list-content" id="listContent"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ADULTS SECTION SCRIPT -->
+<script src="section-adults.js"></script>
+
+<!-- MENU TOGGLE -->
+<script>
+document.getElementById("menuBtn").addEventListener("click", function() {
+    document.getElementById("menuPanel").classList.toggle("show");
+});
+</script>
+
+<!-- PIN POPUP (OPTIONAL) -->
+<script>
+// Bouton Close
+document.getElementById("adultPinClose").onclick = () => {
+    document.getElementById("adultPinModal").style.display = "none";
+};
+
+// Bouton Unlock
+document.getElementById("adultPinUnlock").onclick = () => {
+    const pin = document.getElementById("adultPinInput").value;
+
+    if (pin === "062026") {
+        document.getElementById("adultPinModal").style.display = "none";
+    } else {
+        document.getElementById("adultPinError").style.display = "block";
+    }
+};
+</script>
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMTV - Cartoons</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- NAVBAR (LOGO + TIT AGOCH, SAN CARTOONS, SAN ADULTS) -->
+<div class="navbar">
+    <div class="nav-left">
+        <img src="logo-lmtv.png" class="nav-logo">
+        <span class="nav-title">LE MAIRE TV CARTOONS</span>
+    </div>
+    <div class="nav-right"></div>
+</div>
+
+<!-- PAGE WRAPPER -->
+<div class="section-wrapper">
+
+    <!-- TOP BAR: MENU + SEARCH -->
+<div class="top-bar">
+    <button class="menu-btn" id="menuBtn">☰ MENU</button>
+
+    <div class="inside" id="menuPanel">
+        <a class="nav-item" href="index.html">🏠 HOME</a>
+        <a class="nav-item" href="livetv.html">📺 LIVE TV</a>
+        <a class="nav-item" href="movies.html">🎬 MOVIES</a>
+        <a class="nav-item" href="videos.html">🎞️ VIDEOS</a>
+        <a class="nav-item" href="cartoons.html">🧸 CARTOONS</a>
+    </div>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search cartoons...">
+            <div class="search-suggestions" id="searchSuggestions"></div>
+        </div>
+    </div>
+
+    <!-- MAIN LAYOUT -->
+    <div class="video-layout">
+
+        <!-- PLAYER -->
+        <div class="player-box">
+            <video id="player" controls></video>
+        </div>
+
+        <!-- RIGHT PANEL (FOLDERS + FILES) -->
+        <div class="list-panel">
+
+            <div class="list-header">
+                <button id="btnBack" class="nav-folder-btn">⬅ Back</button>
+                <button id="btnRoot" class="nav-folder-btn">🏠 Root</button>
+                <span id="currentPathLabel" class="path-label"></span>
+            </div>
+
+            <div class="list-content" id="listContent"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="section-cartoons.js"></script>
+
+<!-- MENU TOGGLE SCRIPT -->
+<script>
+document.getElementById("menuBtn").addEventListener("click", function() {
+    document.getElementById("menuPanel").classList.toggle("show");
+});
+</script>
+
+<script>
+// ENTRO LOGO — JWE SELMAN LÈ SIT LA OUVRI
+document.addEventListener("DOMContentLoaded", () => {
+
+    if (!sessionStorage.getItem("introPlayed")) {
+
+        // kite intro a jwe pou 2.5s
+        setTimeout(() => {
+            document.querySelector(".intro-screen").classList.add("hide");
+        }, 2500);
+
+        // make intro a kòm jwe
+        sessionStorage.setItem("introPlayed", "yes");
+
+    } else {
+        // si intro a te jwe deja, pa montre li ankò
+        document.querySelector(".intro-screen").style.display = "none";
+    }
+
+});
+</script>
+
+</body>
+</html>

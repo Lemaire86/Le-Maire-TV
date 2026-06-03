@@ -1,0 +1,466 @@
+/* ===========================
+   GLOBAL
+=========================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #050A1A;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* ===========================
+   NAVBAR
+=========================== */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 65px;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 900;
+}
+
+.nav-logo-small {
+  height: 60px;
+}
+
+/* ===========================
+   MENU DROPDOWN
+=========================== */
+.menu-panel {
+  position: fixed;
+  top: 65px;
+  right: 20px;
+  background: rgba(10,15,35,0.95);
+  padding: 15px;
+  border-radius: 10px;
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  width: 180px;
+  box-shadow: 0 0 15px #ff006e;
+  transform-origin: top;
+  transform: scaleY(0);
+  opacity: 0;
+  transition: 0.25s ease-out;
+}
+
+.menu-panel.show {
+  display: flex;
+  transform: scaleY(1);
+  opacity: 1;
+}
+
+.menu-panel a {
+  color: white;
+  text-decoration: none;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.menu-panel a:hover {
+  background: #ff006e;
+}
+
+/* ===========================
+   INTRO LOGO
+=========================== */
+.intro-screen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 1s ease-out;
+}
+
+.intro-screen.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.intro-logo {
+  width: 420px;
+  animation: introZoom 2s ease-out;
+}
+
+@keyframes introZoom {
+  0% { transform: scale(0.2); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ===========================
+   BACKGROUND VIDEO
+=========================== */
+#bgVideo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(3px);
+  z-index: -1;
+}
+
+/* ===========================
+   HOME CENTER
+=========================== */
+.home-center {
+  position: relative;
+  margin-top: 180px;
+  text-align: center;
+}
+
+.home-title {
+  font-size: 42px;
+  text-shadow: 0 0 15px #ff00ff;
+}
+
+.home-subtitle {
+  margin-top: 10px;
+  font-size: 20px;
+  opacity: 0.8;
+}
+
+/* ===========================
+   HOME BUTTONS SIDE BY SIDE
+=========================== */
+.home-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 30px;
+}
+
+/* LEFT BUTTON – SOLID */
+.btn-left {
+  background: #ff006e;
+  padding: 15px 35px;
+  border-radius: 10px;
+  color: white;
+  font-size: 22px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s ease;
+  border: 2px solid #ff006e;
+}
+
+.btn-left:hover {
+  background: #ff00aa;
+  transform: scale(1.08);
+  box-shadow: 0 0 15px #ff00aa;
+}
+
+/* RIGHT BUTTON – TRANSPARENT */
+.btn-right {
+  background: transparent;
+  padding: 15px 35px;
+  border-radius: 10px;
+  color: white;
+  font-size: 22px;
+  text-decoration: none;
+  font-weight: bold;
+  border: 2px solid #ffffffaa;
+  transition: 0.3s ease;
+}
+
+.btn-right:hover {
+  background: rgba(255,255,255,0.15);
+  transform: scale(1.08);
+  box-shadow: 0 0 15px rgba(255,255,255,0.4);
+}
+
+/* ===========================
+   HAVE FUN SECTION – CINEMA STYLE
+=========================== */
+.fun-section {
+  margin-top: 180px;
+  text-align: center;
+}
+
+.fun-title {
+  font-size: 34px;
+  margin-bottom: 25px;
+  text-shadow: 0 0 14px #ff00ff;
+  letter-spacing: 1px;
+}
+
+.fun-video-box {
+  width: 70%;
+  max-width: 900px;
+  margin: auto;
+  border-radius: 18px;
+  padding: 10px;
+  background: radial-gradient(circle at top, rgba(255,0,110,0.25), rgba(5,10,26,0.95));
+  border: 3px solid rgba(255,255,255,0.35);
+  box-shadow: 0 0 25px rgba(255,0,110,0.6);
+  overflow: hidden;
+  position: relative;
+  transition: 0.35s ease;
+}
+
+.fun-video-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.18);
+  pointer-events: none;
+}
+
+.fun-video-box:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 40px rgba(255,0,170,0.8);
+}
+
+.fun-video {
+  width: 100%;
+  border-radius: 12px;
+  display: block;
+}
+
+/* ===========================
+   FOOTER
+=========================== */
+.footer {
+  margin-top: 100px;
+  text-align: center;
+  padding-bottom: 40px;
+}
+
+.footer-logo {
+  width: 80px;
+  opacity: 0.8;
+}
+
+.footer p {
+  margin-top: 10px;
+  opacity: 0.7;
+}
+
+/* ===========================
+   SCROLL ANIMATIONS
+=========================== */
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease-out;
+}
+
+.scroll-animate.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.zoom-animate {
+  opacity: 0;
+  transform: scale(0.85);
+  transition: all 0.8s ease-out;
+}
+
+.zoom-animate.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ===========================
+   HAVE FUN – REAL VIDEO PLAYER
+=========================== */
+.fun-section {
+  margin-top: 180px;
+  text-align: center;
+}
+
+.fun-title {
+  font-size: 36px;
+  margin-bottom: 25px;
+  text-shadow: 0 0 12px #ff00ff;
+  letter-spacing: 1px;
+}
+
+/* REAL VIDEO PLAYER FRAME */
+.fun-video-box {
+  width: 70%;
+  max-width: 900px;
+  margin: auto;
+  border-radius: 18px;
+  padding: 0;
+  background: #000;
+  border: 4px solid #ff006e;
+  box-shadow: 0 0 35px rgba(255,0,110,0.7);
+  overflow: hidden;
+  position: relative;
+  transition: 0.35s ease;
+}
+
+.fun-video-box:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 55px rgba(255,0,170,0.9);
+}
+
+.fun-video {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 0;
+}
+
+/* VIDEO INSIDE PLAYER */
+.fun-video {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 0;
+}
+
+.home-logo-glow {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.home-logo-big {
+    width: 380px;
+    filter: drop-shadow(0 0 18px #ff00ff) drop-shadow(0 0 28px #ff00ff);
+    animation: glowPulse 3.5s infinite ease-in-out;
+}
+
+@keyframes glowPulse {
+    0% { filter: drop-shadow(0 0 10px #ff00ff); }
+    50% { filter: drop-shadow(0 0 30px #ff00ff); }
+    100% { filter: drop-shadow(0 0 10px #ff00ff); }
+}
+
+
+.menu-btn {
+    background: #ff006e;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    font-size: 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.menu-btn:hover {
+    background: #ff2fa3;
+}
+
+.intro-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.8s ease;
+}
+
+.intro-screen.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.menu-panel {
+    z-index: 9999 !important;
+}
+
+.pin-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.75);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+}
+
+.pin-box {
+    background: #0b1020;
+    padding: 25px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 0 20px #ff006e;
+}
+
+.pin-box h2 {
+    color: white;
+    margin-bottom: 15px;
+}
+
+.pin-box input {
+    width: 80%;
+    padding: 10px;
+    font-size: 18px;
+    text-align: center;
+    border-radius: 6px;
+    border: none;
+    margin-bottom: 10px;
+}
+
+.pin-error {
+    color: red;
+    display: none;
+    margin-bottom: 10px;
+}
+
+.pin-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.pin-btn {
+    padding: 10px 20px;
+    background: #ff006e;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+}
+
+.pin-close {
+    background: #444;
+}
+
+.menu-panel a {
+    display: block;
+}
+
+.menu-panel {
+    z-index: 9999 !important;
+    height: auto !important;
+}
+
