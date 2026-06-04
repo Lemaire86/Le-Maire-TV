@@ -1,0 +1,42 @@
+#EXTINF:25,Nickelodeon Junior (1080p)
+http://151.80.18.177:86/Nickelodeon_Junior/index.m3u8
+#EXTINF:60,TV Panou (720p) [Not 24/7]
+http://tvpanoucom.srfms.com:1935/tvpanoucom/livestream/playlist.m3u8
+#EXTINF:30,Radio Tele Ginen
+http://teleginen.srfms.com:1935/teleginen/livestream/playlist.m3u8
+#EXTINF:16,RTH-TV1 (1080p)
+https://2-fss-2.streamhoster.com/pl_120/amlst:206708-4203440/playlist.m3u8
+#EXTINF:35,Radio Télé Stanne Charitab (480p)
+https://59d39900ebfb8.streamlock.net/radiotelestannecharitab/radiotelestannecharitab/playlist.m3u8
+#EXTINF:36,Radio Tele Sentinel
+https://59d39900ebfb8.streamlock.net/radiotelesentinel/radiotelesentinel/playlist.m3u8
+#EXTINF:120,Radio Télé Hit (480p)
+https://59d39900ebfb8.streamlock.net/RadioTelehit/RadioTelehit/playlist.m3u8
+#EXTINF:20,Tele Pam (1080p)
+https://watch.haitilive.net/app/2020/telepam/index.fmp4.m3u8
+#EXTINF:20,NETALKOLE TV (720p) [Not 24/7]
+https://watch.haitilive.net/naktvhd/index.m3u8
+#EXTINF:20,TNH (720p)
+https://bozztv.com/dvrfl03/hdirect/hdirect-telecaraibes/index.m3u8
+#EXTINF:30,Radio Tele Full Gospel
+https://f-tx-edge-87.christianworldmedia.com/EJCFG/mp4:EJCFG/playlist.m3u8
+#EXTINF:16,RTH-TV2 Gospel (720p)
+https://2-fss-2.streamhoster.com/pl_120/amlst:206708-4202592/playlist.m3u8
+#EXTINF:36,Tele Louange (1080p)
+https://5790d294af2dc.streamlock.net/8124/8124/playlist.m3u8
+#EXTINF:20,Tele Pam (1080p)
+https://watch.haitilive.net/app/2020/telepam/index.fmp4.m3u8
+#EXTINF:35,Tele Louange (720p)
+https://5790d294af2dc.streamlock.net/8124/8124/playlist.m3u8
+#EXTINF:30,Radio Télé 4VEH (720p)
+https://uni01rtmp.tulix.tv/4vehtv/4vehtv-firetv/playlist.m3u8
+#EXTINF:31,HMI PROMZ NEWS (720p)
+https://video1.getstreamhosting.com:1936/8326/8326/playlist.m3u8
+#EXTINF:29,Radio Tele Puissance
+https://video1.getstreamhosting.com:1936/8560/8560/playlist.m3u8
+#EXTINF:29,Kajou TV (720p) [Not 24/7]
+https://video1.getstreamhosting.com:1936/8055/8055/playlist.m3u8
+#EXTINF:14,BBLACK! CARIBBEAN
+http://livevideo.vedge.infomaniak.com/livecast/ik:bblackcaribbean/manifest.m3u8
+#EXTINF:30,BPX TV Radio
+https://video1.getstreamhosting.com:1936/8212/8212/playlist.m3u8
