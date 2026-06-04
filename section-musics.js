@@ -5,8 +5,8 @@ window.currentIndex = 0;
    MUSICS SYSTEM (LOCAL PC)
 =========================== */
 
-const SERVER = "http://192.168.12.126:5500";
-const ROOT = SERVER + "/MUSICS/";
+const SERVER = "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev";
+const ROOT = SERVER + "/server-lmtv/MUSICS/";
 
 let currentPath = ROOT;
 
