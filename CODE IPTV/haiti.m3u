@@ -1,0 +1,31 @@
+#EXTM3U
+
+#EXTINF:-1 tvg-logo="",Tele Eclair (HT)
+https://livestreamcdn.net:444/TeleEclair/TeleEclair/playlist.m3u8
+
+#EXTINF:-1 tvg-logo="",Tele Caraibes (HT)
+https://livestreamcdn.net:444/TeleCaraibes/TeleCaraibes/playlist.m3u8
+
+#EXTINF:-1 tvg-logo="",Tele Hirondelle (HT)
+https://livestreamcdn.net:444/TeleHirondelle/TeleHirondelle/playlist.m3u8
+
+#EXTINF:-1 tvg-logo="",Tele Pacific (HT)
+https://livestreamcdn.net:444/TelePacific/TelePacific/playlist.m3u8
+
+#EXTINF:-1 tvg-logo="",Tele Ginen (RTG)
+https://livestreamcdn.net:444/TeleGinen/TeleGinen/playlist.m3u8
+
+#EXTINF:-1 tvg-logo="",Tele Soleil (HT)
+https://livestreamcdn.net:444/TeleSoleil/TeleSoleil/playlist.m3u8
+
+#EXTINF:-1 tvg-logo="",Tele Metropole (HT)
+https://livestreamcdn.net:444/TeleMetropole/TeleMetropole/playlist.m3u8
+
+#EXTINF:-1 tvg-logo="",Tele Pluriel (HT)
+https://livestreamcdn.net:444/TelePluriel/TelePluriel/playlist.m3u8
+
+#EXTINF:-1 tvg-logo="",Tele Signal (HT)
+https://livestreamcdn.net:444/TeleSignal/TeleSignal/playlist.m3u8
+
+#EXTINF:-1 tvg-logo="",Radio Tele Kiskeya (HT)
+https://livestreamcdn.net:444/TeleKiskeya/TeleKiskeya/playlist.m3u8
