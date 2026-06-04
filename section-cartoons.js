@@ -1,6 +1,9 @@
-// CONFIG SEKSIYON SA A
+window.mediaPlaylist = [];
+window.currentIndex = 0;
+
+// CONFIG
 const serverURL = "http://192.168.12.126:5500/";
-const rootFolder = "CARTOONS/";   // CARTOONS
+const rootFolder = "CARTOONS/";
 const videoExt = ["mp4","mkv","avi","mov","wmv","flv","mp3","wav","ogg","m4a"];
 
 let currentPath = "";
@@ -41,14 +44,23 @@ async function renderCurrent(){
 
   const items = await loadFolder(serverURL + rootFolder + currentPath);
 
-  items.forEach(item => {
+  window.mediaPlaylist = [];
+  allItemsIndex = [];
+
+  items.forEach((item, i) => {
     const full = currentPath + item;
 
     if(isFolder(item)){
-      addFolderCard(full, item);
-    } else if(isMedia(item)){
-      addFileCard(full, item);
-      indexItem(full, item);
+        addFolderCard(full, item);
+    } 
+    else if(isMedia(item)){
+        addFileCard(full, item);
+
+        // ADD TO PLAYLIST (FULL URL)
+        window.mediaPlaylist.push(serverURL + rootFolder + full);
+
+        // INDEX FOR SEARCH
+        indexItem(full, item);
     }
   });
 }
@@ -73,9 +85,7 @@ function addFolderCard(fullPath, name){
 function addFileCard(fullPath, name){
   const div = document.createElement("div");
   div.className = "item-card";
-  div.innerHTML = `
-    <div class="item-title">🎬 ${decodeURIComponent(name)}</div>
-  `;
+  div.innerHTML = `<div class="item-title">🎬 ${decodeURIComponent(name)}</div>`;
   div.onclick = () => playMedia(fullPath);
   listContent.appendChild(div);
 }
@@ -90,9 +100,13 @@ async function countFilesInFolder(folderPath){
 
 // PLAY MEDIA
 function playMedia(fullPath){
-  player.src = serverURL + rootFolder + fullPath;
-  player.load();
-  player.play().catch(()=>{});
+    const fullURL = serverURL + rootFolder + fullPath;
+
+    player.src = fullURL;
+    player.load();
+    player.play().catch(()=>{});
+
+    window.currentIndex = window.mediaPlaylist.indexOf(fullURL);
 }
 
 // BACK / ROOT
@@ -129,12 +143,6 @@ searchInput.addEventListener("input", () => {
 
   const matches = allItemsIndex.filter(it => it.lower.includes(q)).slice(0, 20);
 
-  if(matches.length === 0){
-    suggestionsBox.style.display = "none";
-    suggestionsBox.innerHTML = "";
-    return;
-  }
-
   suggestionsBox.innerHTML = "";
   matches.forEach(m => {
     const div = document.createElement("div");
@@ -146,12 +154,12 @@ searchInput.addEventListener("input", () => {
     };
     suggestionsBox.appendChild(div);
   });
-  suggestionsBox.style.display = "block";
+
+  suggestionsBox.style.display = matches.length ? "block" : "none";
 });
 
 // INIT
 (async () => {
   currentPath = "";
-  allItemsIndex = [];
   await renderCurrent();
 })();

@@ -25,13 +25,14 @@
 <div class="top-bar">
     <button class="menu-btn" id="menuBtn">☰ MENU</button>
 
-    <div class="inside" id="menuPanel">
-        <a class="nav-item" href="index.html">🏠 HOME</a>
-        <a class="nav-item" href="livetv.html">📺 LIVE TV</a>
-        <a class="nav-item" href="movies.html">🎬 MOVIES</a>
-        <a class="nav-item" href="videos.html">🎞️ VIDEOS</a>
-        <a class="nav-item" href="cartoons.html">🧸 CARTOONS</a>
-    </div>
+        <div class="inside" id="menuPanel">
+            <a class="nav-item" href="index.html">🏠 HOME</a>
+            <a class="nav-item" href="livetv.html">📺 LIVE TV</a>
+            <a class="nav-item" href="movies.html">🎬 MOVIES</a>
+            <a class="nav-item" href="videos.html">🎞️ VIDEOS</a>
+            <a class="nav-item" href="musics.html">🎵 MUSICS</a>
+        </div>
+
 
         <div class="search-box">
             <input type="text" id="searchInput" placeholder="Search cartoons...">
@@ -43,9 +44,14 @@
     <div class="video-layout">
 
         <!-- PLAYER -->
-        <div class="player-box">
-            <video id="player" controls></video>
-        </div>
+       <div class="player-box">
+           <video id="player" controls></video>
+
+           <div class="media-controls">
+               <button id="prevBtn" class="media-btn">⏮</button>
+               <button id="nextBtn" class="media-btn">⏭</button>
+           </div>
+       </div>
 
         <!-- RIGHT PANEL (FOLDERS + FILES) -->
         <div class="list-panel">
@@ -93,6 +99,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
+document.getElementById("nextBtn").onclick = () => {
+    if (!window.mediaPlaylist.length) return;
+
+    window.currentIndex = (window.currentIndex + 1) % window.mediaPlaylist.length;
+    playMedia(window.mediaPlaylist[window.currentIndex]);
+};
+
+document.getElementById("prevBtn").onclick = () => {
+    if (!window.mediaPlaylist.length) return;
+
+    window.currentIndex = (window.currentIndex - 1 + window.mediaPlaylist.length) % window.mediaPlaylist.length;
+    playMedia(window.mediaPlaylist[window.currentIndex]);
+};
+
 </script>
 
 </body>

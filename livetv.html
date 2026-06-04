@@ -9,29 +9,29 @@
 
 <body>
 
-<!-- NAVBAR (LOGO + TIT AGOCH) -->
+<!-- NAVBAR -->
 <div class="navbar">
     <div class="nav-left">
         <img src="logo-lmtv.png" class="nav-logo">
         <span class="nav-title">LE MAIRE TV LIVE</span>
     </div>
-<div class="nav-right"></div>
+    <div class="nav-right"></div>
 </div>
 
 <!-- PAGE WRAPPER -->
 <div class="section-wrapper">
 
-    <!-- TOP BAR: MENU + SEARCH -->
-<div class="top-bar">
-    <button class="menu-btn" id="menuBtn">☰ MENU</button>
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <button class="menu-btn" id="menuBtn">☰ MENU</button>
 
-    <div class="inside" id="menuPanel">
-        <a class="nav-item" href="index.html">🏠 HOME</a>
-        <a class="nav-item" href="livetv.html">📺 LIVE TV</a>
-        <a class="nav-item" href="movies.html">🎬 MOVIES</a>
-        <a class="nav-item" href="videos.html">🎞️ VIDEOS</a>
-        <a class="nav-item" href="cartoons.html">🧸 CARTOONS</a>
-    </div>
+        <div class="inside" id="menuPanel">
+            <a class="nav-item" href="index.html">🏠 HOME</a>
+            <a class="nav-item" href="movies.html">🎬 MOVIES</a>
+            <a class="nav-item" href="videos.html">🎞️ VIDEOS</a>
+            <a class="nav-item" href="cartoons.html">🧸 CARTOONS</a>
+            <a class="nav-item" href="musics.html">🎵 MUSICS</a>
+        </div>
 
         <div class="search-box">
             <input type="text" id="searchInput" placeholder="Search channels...">
@@ -46,19 +46,22 @@
         <div class="player-box">
             <video id="player" controls></video>
             <div id="nowPlaying" class="now-playing">MENU LIVE TV</div>
+
+            <div class="media-controls">
+                <button id="prevBtn" class="media-btn">⏮</button>
+                <button id="nextBtn" class="media-btn">⏭</button>
+            </div>
         </div>
 
-        <!-- RIGHT PANEL (CATEGORIES + CHANNELS) -->
+        <!-- RIGHT PANEL -->
         <div class="list-panel">
 
-            <!-- CATEGORY FOLDERS -->
             <div class="list-header">
                 <button class="nav-folder-btn" data-folder="categories">📺 Categories</button>
                 <button class="nav-folder-btn" data-folder="countries">🌍 Countries</button>
                 <button class="nav-folder-btn" data-folder="languages">🗣 Languages</button>
             </div>
 
-            <!-- CATEGORY CONTENT -->
             <div class="list-content" id="listContent"></div>
 
         </div>
@@ -67,34 +70,42 @@
 
 </div>
 
+<!-- LIVE TV LOGIC -->
 <script src="section-livetv.js"></script>
 
-<!-- MENU TOGGLE SCRIPT -->
+<!-- MENU TOGGLE -->
 <script>
-document.getElementById("menuBtn").addEventListener("click", function() {
+document.getElementById("menuBtn").onclick = () => {
     document.getElementById("menuPanel").classList.toggle("show");
-});
+};
 </script>
 
+<!-- NEXT / PREVIOUS + AUTO-NEXT -->
 <script>
-// ENTRO LOGO — JWE SELMAN LÈ SIT LA OUVRI
-document.addEventListener("DOMContentLoaded", () => {
+const player = document.getElementById("player");
 
-    if (!sessionStorage.getItem("introPlayed")) {
+document.getElementById("nextBtn").onclick = () => {
+    if (!window.mediaPlaylist || !window.mediaPlaylist.length) return;
 
-        // kite intro a jwe pou 2.5s
-        setTimeout(() => {
-            document.querySelector(".intro-screen").classList.add("hide");
-        }, 2500);
+    window.currentIndex = (window.currentIndex + 1) % window.mediaPlaylist.length;
+    player.src = window.mediaPlaylist[window.currentIndex];
+    player.play();
+};
 
-        // make intro a kòm jwe
-        sessionStorage.setItem("introPlayed", "yes");
+document.getElementById("prevBtn").onclick = () => {
+    if (!window.mediaPlaylist || !window.mediaPlaylist.length) return;
 
-    } else {
-        // si intro a te jwe deja, pa montre li ankò
-        document.querySelector(".intro-screen").style.display = "none";
-    }
+    window.currentIndex = (window.currentIndex - 1 + window.mediaPlaylist.length) % window.mediaPlaylist.length;
+    player.src = window.mediaPlaylist[window.currentIndex];
+    player.play();
+};
 
+player.addEventListener("ended", () => {
+    if (!window.mediaPlaylist || !window.mediaPlaylist.length) return;
+
+    window.currentIndex = (window.currentIndex + 1) % window.mediaPlaylist.length;
+    player.src = window.mediaPlaylist[window.currentIndex];
+    player.play();
 });
 </script>
 

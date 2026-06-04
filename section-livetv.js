@@ -1,11 +1,14 @@
+// GLOBAL PLAYLIST
+window.mediaPlaylist = [];
+window.currentIndex = 0;
+
 /* =========================
    PLAYLIST SOURCES
 ========================= */
-
-const mainPlaylist = "https://iptv-org.github.io/iptv/index.m3u";
+const mainPlaylist = "https://raw.githubusercontent.com/Lemaire86/Le-Maire-TV/refs/heads/main/CODE%20IPTV/le_maire_tv.m3u";
 
 const countryPlaylists = {
-  HT: "https://iptv-org.github.io/iptv/countries/ht.m3u",
+  HT: "https://raw.githubusercontent.com/Lemaire86/Le-Maire-TV/refs/heads/main/CODE%20IPTV/lmtv.m3u",
   FR: "https://iptv-org.github.io/iptv/countries/fr.m3u",
   US: "https://iptv-org.github.io/iptv/countries/us.m3u"
 };
@@ -23,10 +26,8 @@ let allChannels = [];
 let filteredChannels = [];
 let allIndex = [];
 
-let currentFolder = "categories"; // default
+let currentFolder = "categories";
 let currentCategory = "all";
-let currentCountry = null;
-let currentLanguage = null;
 
 /* =========================
    ELEMENTS
@@ -209,16 +210,19 @@ function renderChannels(){
 
   if(filteredChannels.length === 0){
     listContent.innerHTML = "<p>No channels found</p>";
+    window.mediaPlaylist = [];
     return;
   }
 
-  filteredChannels.forEach(ch => {
+  // BUILD PLAYLIST
+  window.mediaPlaylist = filteredChannels.map(ch => ch.url);
+  window.currentIndex = 0;
+
+  filteredChannels.forEach((ch, i) => {
     const div = document.createElement("div");
     div.className = "item-card";
-    div.innerHTML = `
-      <div class="item-title">📺 ${ch.name}</div>
-    `;
-    div.onclick = () => playChannel(ch);
+    div.innerHTML = `<div class="item-title">📺 ${ch.name}</div>`;
+    div.onclick = () => playChannel(ch, i);
     listContent.appendChild(div);
   });
 }
@@ -226,10 +230,12 @@ function renderChannels(){
 /* =========================
    PLAY CHANNEL
 ========================= */
-function playChannel(ch){
-  player.src = ch.url;
-  nowPlaying.textContent = "Now Playing: " + ch.name;
-  player.play().catch(()=>{});
+function playChannel(ch, index) {
+    player.src = ch.url;
+    player.play().catch(()=>{});
+
+    window.currentIndex = index;
+    nowPlaying.textContent = "Now Playing: " + ch.name;
 }
 
 /* =========================

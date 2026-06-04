@@ -25,13 +25,14 @@
     <div class="top-bar">
     <button class="menu-btn" id="menuBtn">☰ MENU</button>
 
-    <div class="inside" id="menuPanel">
-        <a class="nav-item" href="index.html">🏠 HOME</a>
-        <a class="nav-item" href="livetv.html">📺 LIVE TV</a>
-        <a class="nav-item" href="movies.html">🎬 MOVIES</a>
-        <a class="nav-item" href="videos.html">🎞️ VIDEOS</a>
-        <a class="nav-item" href="cartoons.html">🧸 CARTOONS</a>
-    </div>
+        <div class="inside" id="menuPanel">
+            <a class="nav-item" href="index.html">🏠 HOME</a>
+            <a class="nav-item" href="livetv.html">📺 LIVE TV</a>
+            <a class="nav-item" href="videos.html">🎞️ VIDEOS</a>
+            <a class="nav-item" href="cartoons.html">🧸 CARTOONS</a>
+            <a class="nav-item" href="musics.html">🎵 MUSICS</a>
+        </div>
+
 
         <div class="search-box">
             <input type="text" id="searchInput" placeholder="Search movies...">
@@ -43,9 +44,14 @@
     <div class="video-layout">
 
         <!-- PLAYER -->
-        <div class="player-box">
-            <video id="player" controls></video>
-        </div>
+       <div class="player-box">
+           <video id="player" controls></video>
+
+           <div class="media-controls">
+               <button id="prevBtn" class="media-btn">⏮</button>
+               <button id="nextBtn" class="media-btn">⏭</button>
+           </div>
+       </div>
 
         <!-- RIGHT PANEL (FOLDERS + FILES) -->
         <div class="list-panel">
@@ -91,6 +97,41 @@ document.addEventListener("DOMContentLoaded", () => {
         // si intro a te jwe deja, pa montre li ankò
         document.querySelector(".intro-screen").style.display = "none";
     }
+
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    // Playlist paj la (ranplase ak playlist paj la)
+    const playlist = window.mediaPlaylist;  
+    let index = 0;
+
+    const player = document.getElementById("mediaPlayer");
+    const source = document.getElementById("mediaSource");
+
+    function loadMedia(i) {
+        index = (i + playlist.length) % playlist.length;
+        source.src = playlist[index];
+        player.load();
+        player.play();
+    }
+
+    // NEXT
+    document.getElementById("nextBtn").addEventListener("click", () => {
+        loadMedia(index + 1);
+    });
+
+    // PREVIOUS
+    document.getElementById("prevBtn").addEventListener("click", () => {
+        loadMedia(index - 1);
+    });
+
+    // AUTO NEXT WHEN FINISHED
+    player.addEventListener("ended", () => {
+        loadMedia(index + 1);
+    });
 
 });
 </script>

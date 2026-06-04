@@ -1,3 +1,6 @@
+window.mediaPlaylist = [];
+window.currentIndex = 0;
+
 // CONFIG SEKSIYON SA A
 const serverURL = "http://192.168.12.126:5500/";
 const rootFolder = "MOVIES/";   // chanje pou VIDEOS/, CARTOONS/, MUSICS/, ADULTS/
@@ -41,16 +44,23 @@ async function renderCurrent(){
 
   const items = await loadFolder(serverURL + rootFolder + currentPath);
 
-  items.forEach(item => {
+  window.mediaPlaylist = []; // reset playlist
+
+items.forEach((item, i) => {
     const full = currentPath + item;
 
     if(isFolder(item)){
-      addFolderCard(full, item);
-    } else if(isMedia(item)){
-      addFileCard(full, item);
-      indexItem(full, item);
+        addFolderCard(full, item);
+    } 
+    else if(isMedia(item)){
+        addFileCard(full, item);
+        indexItem(full, item);
+
+        // AJOUTE NAN PLAYLIST
+        window.mediaPlaylist.push(full);
     }
-  });
+});
+
 }
 
 // FOLDER CARD
@@ -90,9 +100,12 @@ async function countFilesInFolder(folderPath){
 
 // PLAY MEDIA
 function playMedia(fullPath){
-  player.src = serverURL + rootFolder + fullPath;
-  player.load();
-  player.play().catch(()=>{});
+    player.src = serverURL + rootFolder + fullPath;
+    player.load();
+    player.play().catch(()=>{});
+
+    // DEFINI INDEX LA
+    window.currentIndex = window.mediaPlaylist.indexOf(fullPath);
 }
 
 // BACK / ROOT
@@ -155,3 +168,17 @@ searchInput.addEventListener("input", () => {
   allItemsIndex = [];
   await renderCurrent();
 })();
+
+document.getElementById("nextBtn").onclick = () => {
+    if (!window.mediaPlaylist.length) return;
+
+    window.currentIndex = (window.currentIndex + 1) % window.mediaPlaylist.length;
+    playMedia(window.mediaPlaylist[window.currentIndex]);
+};
+
+document.getElementById("prevBtn").onclick = () => {
+    if (!window.mediaPlaylist.length) return;
+
+    window.currentIndex = (window.currentIndex - 1 + window.mediaPlaylist.length) % window.mediaPlaylist.length;
+    playMedia(window.mediaPlaylist[window.currentIndex]);
+};

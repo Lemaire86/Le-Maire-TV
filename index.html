@@ -10,7 +10,7 @@
 
 <body>
 
-<audio id="introSound">
+<audio id="introSound" preload="auto">
     <source src="intro-sound.mp3" type="audio/mp3">
 </audio>
 
@@ -71,10 +71,15 @@
     <h2 class="fun-title">HAVE FUN</h2>
 
     <div class="fun-video-box zoom-animate">
-        <video id="funPlayer" muted loop playsinline controls class="fun-video">
+        <video id="funPlayer" muted playsinline controls class="fun-video">
             <source id="funSource" src="" type="video/mp4">
         </video>
     </div>
+
+<div class="fun-controls">
+    <button id="funPrev" class="fun-btn">⏮</button>
+    <button id="funNext" class="fun-btn">⏭</button>
+</div>
 
 </section>
 
@@ -102,8 +107,19 @@
 
 <!-- MENU SCRIPT -->
 <script>
-document.getElementById("menuBtn").addEventListener("click", function() {
-    document.getElementById("menuPanel").classList.toggle("show");
+const menuBtn = document.getElementById("menuBtn");
+const menuPanel = document.getElementById("menuPanel");
+
+menuBtn.addEventListener("click", function(e) {
+    e.stopPropagation();
+    menuPanel.classList.toggle("show");
+});
+
+// Fèmen meni an si moun klike deyò
+document.addEventListener("click", (e) => {
+    if (!menuPanel.contains(e.target) && e.target !== menuBtn) {
+        menuPanel.classList.remove("show");
+    }
 });
 </script>
 
@@ -122,37 +138,6 @@ const observer = new IntersectionObserver(entries => {
 elements.forEach(el => observer.observe(el));
 </script>
 
-<!-- HAVE FUN VIDEO SCRIPT -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-    const funVideos = [
-        "HAVE_FUN/video1.mp4",
-        "HAVE_FUN/video2.mp4",
-        "HAVE_FUN/video3.mp4",
-        "HAVE_FUN/video4.mp4"
-    ];
-
-    let randomVideo = funVideos[Math.floor(Math.random() * funVideos.length)];
-
-    const source = document.getElementById("funSource");
-    const player = document.getElementById("funPlayer");
-
-    source.src = randomVideo;
-    player.load();
-
-    // Fòse videyo a jwe lè li fin chaje
-    player.onloadeddata = () => {
-        const tryPlay = () => {
-            player.play().catch(() => {
-                setTimeout(tryPlay, 200);
-            });
-        };
-        tryPlay();
-    };
-});
-</script>
-
 <!-- INTRO SCRIPT — JWE SELMAN LÈ SIT LA OUVRI -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
@@ -165,9 +150,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // jwe son an (Solisyon #1)
         sound.volume = 0.7;
-        sound.play().catch(() => {
-            console.log("Autoplay blocked. Will play after first click.");
-        });
+      sound.play().catch(() => {
+    document.addEventListener("touchstart", () => sound.play(), { once: true });
+});
 
         // kite intro a jwe pou 2.5s
         setTimeout(() => {
@@ -185,26 +170,104 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
-<!-- ADULT PIN SCRIPT -->
 <script>
-document.getElementById("adultLink").addEventListener("click", function(e) {
-    e.preventDefault();
-    document.getElementById("adultPinModal").style.display = "flex";
-});
+document.addEventListener("DOMContentLoaded", () => {
 
-document.getElementById("adultPinClose").onclick = () => {
-    document.getElementById("adultPinModal").style.display = "none";
-};
+    const funVideos = [
+        "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev/HAVE_FUN/video1.mp4",
+        "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev/HAVE_FUN/video2.mp4",
+        "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev/HAVE_FUN/video3.mp4",
+        "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev/HAVE_FUN/video4.mp4",
+        "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev/HAVE_FUN/video5.mp4",
+        "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev/HAVE_FUN/video6.mp4",
+        "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev/HAVE_FUN/video7.mp4",
+        "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev/HAVE_FUN/video8.mp4",
+        "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev/HAVE_FUN/video9.mp4",
+        "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev/HAVE_FUN/video10.mp4",
+        "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev/HAVE_FUN/video11.mp4",
+        "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev/HAVE_FUN/video12.mp4",
+        "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev/HAVE_FUN/video13.mp4",
+        "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev/HAVE_FUN/video14.mp4",
+        "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev/HAVE_FUN/video15.mp4",
+        "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev/HAVE_FUN/video16.mp4",
+        "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev/HAVE_FUN/video17.mp4",
+        "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev/HAVE_FUN/video18.mp4",
+        "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev/HAVE_FUN/video19.mp4",
+        "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev/HAVE_FUN/video20.mp4",
+        "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev/HAVE_FUN/video21.mp4",
+        "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev/HAVE_FUN/video22.mp4",
+        "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev/HAVE_FUN/video23.mp4",
+        "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev/HAVE_FUN/video24.mp4",
+        "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev/HAVE_FUN/video25.mp4"
+    ];
 
-document.getElementById("adultPinUnlock").onclick = () => {
-    const pin = document.getElementById("adultPinInput").value;
+    let index = Math.floor(Math.random() * funVideos.length);
 
-    if (pin === "062026") {
-        window.location.href = "adults.html";
-    } else {
-        document.getElementById("adultPinError").style.display = "block";
+    const player = document.getElementById("funPlayer");
+    const source = document.getElementById("funSource");
+    const box = document.querySelector(".fun-video-box");
+
+    function loadVideo(i) {
+        index = (i + funVideos.length) % funVideos.length;
+        source.src = funVideos[index];
+        player.load();
+        player.play();
     }
-};
+
+    // FIRST VIDEO
+    loadVideo(index);
+
+    // AUTO NEXT WHEN FINISHED
+    player.addEventListener("ended", () => loadVideo(index + 1));
+
+    // NEXT BUTTON
+    document.getElementById("funNext").addEventListener("click", () => {
+        loadVideo(index + 1);
+    });
+
+    // PREVIOUS BUTTON
+    document.getElementById("funPrev").addEventListener("click", () => {
+        loadVideo(index - 1);
+    });
+
+    // AUTO RESIZE PLAYER
+    player.addEventListener("loadedmetadata", () => {
+        const w = player.videoWidth;
+        const h = player.videoHeight;
+
+        if (h > w) {
+            box.style.maxWidth = "280px"; // portrait
+        } else {
+            box.style.maxWidth = "400px"; // landscape
+        }
+    });
+
+});
+</script>
+
+<script>
+const player = document.getElementById("funPlayer");
+const box = document.querySelector(".fun-video-box");
+
+player.addEventListener("loadedmetadata", () => {
+    const w = player.videoWidth;
+    const h = player.videoHeight;
+
+    if (h > w) {
+        // portrait
+        box.style.maxWidth = "280px";
+    } else {
+        // landscape
+        box.style.maxWidth = "400px";
+    }
+});
+</script>
+
+<script>
+document.getElementById("funPlayer").addEventListener("click", () => {
+    const player = document.getElementById("funPlayer");
+    if (player.requestFullscreen) player.requestFullscreen();
+});
 </script>
 
 </body>

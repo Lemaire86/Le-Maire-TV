@@ -1,3 +1,6 @@
+window.mediaPlaylist = [];
+window.currentIndex = 0;
+
 /* ===========================
    MUSICS SYSTEM (LOCAL PC)
 =========================== */
@@ -67,13 +70,14 @@ async function render() {
     const items = await readFolder(currentPath);
 
     listContent.innerHTML = "";
+    window.mediaPlaylist = [];
 
     if (items.length === 0) {
         listContent.innerHTML = "<p>No files found</p>";
         return;
     }
 
-    items.forEach(item => {
+    items.forEach((item, i) => {
         const div = document.createElement("div");
         div.className = "item-card";
 
@@ -87,7 +91,10 @@ async function render() {
 
         if (item.type === "audio") {
             div.innerHTML = `<div class="item-title">🎵 ${item.name}</div>`;
-            div.onclick = () => playMusic(item);
+            div.onclick = () => playMusic(item.path);
+
+            // ADD TO PLAYLIST
+            window.mediaPlaylist.push(item.path);
         }
 
         listContent.appendChild(div);
@@ -97,12 +104,14 @@ async function render() {
 /* ===========================
    PLAY MUSIC
 =========================== */
-function playMusic(item) {
-    player.src = item.path;
-    player.play().catch(() => {});
+function playMusic(fullPath) {
+    player.src = fullPath;
+    player.play().catch(()=>{});
+
+    window.currentIndex = window.mediaPlaylist.indexOf(fullPath);
 
     // THUMBNAIL
-    let base = item.path.replace(/\.[^/.]+$/, "");
+    let base = fullPath.replace(/\.[^/.]+$/, "");
     let jpg = base + ".jpg";
     let png = base + ".png";
 
@@ -136,6 +145,33 @@ document.getElementById("btnRoot").onclick = () => {
     currentPath = ROOT;
     render();
 };
+
+/* ===========================
+   NEXT / PREVIOUS
+=========================== */
+document.getElementById("nextBtn").onclick = () => {
+    if (!window.mediaPlaylist.length) return;
+
+    window.currentIndex = (window.currentIndex + 1) % window.mediaPlaylist.length;
+    playMusic(window.mediaPlaylist[window.currentIndex]);
+};
+
+document.getElementById("prevBtn").onclick = () => {
+    if (!window.mediaPlaylist.length) return;
+
+    window.currentIndex = (window.currentIndex - 1 + window.mediaPlaylist.length) % window.mediaPlaylist.length;
+    playMusic(window.mediaPlaylist[window.currentIndex]);
+};
+
+/* ===========================
+   AUTO NEXT
+=========================== */
+player.addEventListener("ended", () => {
+    if (!window.mediaPlaylist.length) return;
+
+    window.currentIndex = (window.currentIndex + 1) % window.mediaPlaylist.length;
+    playMusic(window.mediaPlaylist[window.currentIndex]);
+});
 
 /* ===========================
    INIT

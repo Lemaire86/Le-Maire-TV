@@ -152,11 +152,12 @@ body {
   flex-direction: column;
 }
 
-video, audio {
+video {
   width: 100%;
-  height: auto;
-  border-radius: 6px;
+  height: 60vh;          /* wotè fiks */
+  object-fit: contain;   /* pa koupe videyo */
   background: black;
+  border-radius: 6px;
 }
 
 .now-playing {
@@ -237,6 +238,21 @@ video, audio {
 .item-sub {
   font-size: 12px;
   opacity: 0.7;
+}
+
+.list-panel {
+    width: 450px;          /* FÈ KOLÒN DWAT LA FIKS */
+    min-width: 450px;
+    max-width: 450px;
+    flex-shrink: 0;        /* PA JANM RETRESI */
+}
+
+.item-card {
+    width: 100%;           
+    overflow: hidden;      
+    white-space: nowrap;   
+    text-overflow: ellipsis; 
+    display: block;
 }
 
 /* ===========================
@@ -677,3 +693,29 @@ audio#player {
     box-shadow: 0 0 15px rgba(255,255,255,0.4);
 }
 
+.media-controls {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 12px;
+}
+
+.media-btn {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(8px);
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+    transition: 0.25s ease;
+    box-shadow: 0 0 12px rgba(0,0,0,0.4);
+}
+
+.media-btn:hover {
+    background: rgba(255,255,255,0.18);
+    transform: scale(1.12);
+    box-shadow: 0 0 18px rgba(255,255,255,0.4);
+}
