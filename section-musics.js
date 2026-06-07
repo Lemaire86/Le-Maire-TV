@@ -33,25 +33,30 @@ async function loadJSON() {
 
 
 // -------------------------------
-// LOAD ROOT
+// LOAD ROOT (FIXED)
 // -------------------------------
 function loadRoot() {
     currentPath = "";
     pathLabel.textContent = "/";
 
-    const rootItems = fullData.filter(item => !item.path.includes("/", 1));
+    // ROOT = MUSICS/FILENAME (2 parts)
+    const rootItems = fullData.filter(item => item.path.split("/").length === 2);
+
     renderList(rootItems);
 }
 
 
 // -------------------------------
-// OPEN FOLDER
+// OPEN FOLDER (FIXED)
 // -------------------------------
 function openFolder(path) {
     currentPath = path;
     pathLabel.textContent = "/" + path;
 
-    const folderItems = fullData.filter(item => item.path.startsWith(path));
+    const folderItems = fullData.filter(
+        item => item.path.startsWith(path) && item.path !== path
+    );
+
     renderList(folderItems);
 }
 
