@@ -1,0 +1,13 @@
+[
+  {
+    "type": "folder",
+    "name": "Folder Name",
+    "path": "SECTION/Folder Name/"
+  },
+  {
+    "type": "file",
+    "name": "File1.mp4",
+    "path": "SECTION/Folder Name/File1.mp4",
+    "url": "https://your-r2/SECTION/Folder Name/File1.mp4"
+  }
+]
