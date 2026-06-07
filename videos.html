@@ -35,7 +35,7 @@
 
 
     <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Search musics...">
+        <input type="text" id="searchInput" placeholder="Search videos...">
         <div class="search-suggestions" id="searchSuggestions"></div>
     </div>
 </div>
@@ -97,41 +97,6 @@ document.addEventListener("DOMContentLoaded", () => {
         // si intro a te jwe deja, pa montre li ankò
         document.querySelector(".intro-screen").style.display = "none";
     }
-
-});
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-    // Playlist paj la (ranplase ak playlist paj la)
-    const playlist = window.mediaPlaylist;  
-    let index = 0;
-
-    const player = document.getElementById("mediaPlayer");
-    const source = document.getElementById("mediaSource");
-
-    function loadMedia(i) {
-        index = (i + playlist.length) % playlist.length;
-        source.src = playlist[index];
-        player.load();
-        player.play();
-    }
-
-    // NEXT
-    document.getElementById("nextBtn").addEventListener("click", () => {
-        loadMedia(index + 1);
-    });
-
-    // PREVIOUS
-    document.getElementById("prevBtn").addEventListener("click", () => {
-        loadMedia(index - 1);
-    });
-
-    // AUTO NEXT WHEN FINISHED
-    player.addEventListener("ended", () => {
-        loadMedia(index + 1);
-    });
 
 });
 </script>

@@ -71,6 +71,7 @@
 
 </div>
 
+<!-- MUSICS SECTION SCRIPT -->
 <script src="section-musics.js"></script>
 
 <!-- MENU TOGGLE -->
@@ -78,35 +79,6 @@
 document.getElementById("menuBtn").onclick = () => {
     document.getElementById("menuPanel").classList.toggle("show");
 };
-</script>
-
-<!-- NEXT / PREVIOUS + AUTO-NEXT -->
-<script>
-const player = document.getElementById("player");
-
-document.getElementById("nextBtn").onclick = () => {
-    if (!window.mediaPlaylist || !window.mediaPlaylist.length) return;
-
-    window.currentIndex = (window.currentIndex + 1) % window.mediaPlaylist.length;
-    player.src = window.mediaPlaylist[window.currentIndex];
-    player.play();
-};
-
-document.getElementById("prevBtn").onclick = () => {
-    if (!window.mediaPlaylist || !window.mediaPlaylist.length) return;
-
-    window.currentIndex = (window.currentIndex - 1 + window.mediaPlaylist.length) % window.mediaPlaylist.length;
-    player.src = window.mediaPlaylist[window.currentIndex];
-    player.play();
-};
-
-player.addEventListener("ended", () => {
-    if (!window.mediaPlaylist || !window.mediaPlaylist.length) return;
-
-    window.currentIndex = (window.currentIndex + 1) % window.mediaPlaylist.length;
-    player.src = window.mediaPlaylist[window.currentIndex];
-    player.play();
-});
 </script>
 
 </body>

@@ -9,22 +9,6 @@
 
 <body>
 
-<!-- POPUP ADULT PIN (PA SÈVI NAN PAJ SA A, MEN NOU KITE L SI OU VLE RELANSE PIN AN) -->
-<div id="adultPinModal" class="pin-modal" style="display:none;">
-  <div class="pin-box">
-      <h2>Enter PIN</h2>
-
-      <input id="adultPinInput" type="password" maxlength="6" placeholder="Enter PIN">
-
-      <p id="adultPinError" class="pin-error">Incorrect PIN</p>
-
-      <div class="pin-buttons">
-          <button id="adultPinUnlock" class="pin-btn">Unlock</button>
-          <button id="adultPinClose" class="pin-btn pin-close">Close</button>
-      </div>
-  </div>
-</div>
-
 <!-- NAVBAR -->
 <div class="navbar">
     <div class="nav-left">
@@ -60,14 +44,14 @@
     <div class="video-layout">
 
         <!-- PLAYER -->
-       <div class="player-box">
-           <video id="player" controls></video>
+        <div class="player-box">
+            <video id="player" controls></video>
 
-           <div class="media-controls">
-               <button id="prevBtn" class="media-btn">⏮</button>
-               <button id="nextBtn" class="media-btn">⏭</button>
-           </div>
-       </div>
+            <div class="media-controls">
+                <button id="prevBtn" class="media-btn">⏮</button>
+                <button id="nextBtn" class="media-btn">⏭</button>
+            </div>
+        </div>
 
         <!-- RIGHT PANEL -->
         <div class="list-panel">
@@ -86,83 +70,14 @@
 
 </div>
 
-<!-- ADULTS SECTION SCRIPT -->
+<!-- ADULTS SECTION SCRIPT (WORKER + R2) -->
 <script src="section-adults.js"></script>
 
 <!-- MENU TOGGLE -->
 <script>
-document.getElementById("menuBtn").addEventListener("click", function() {
+document.getElementById("menuBtn").addEventListener("click", () => {
     document.getElementById("menuPanel").classList.toggle("show");
 });
-</script>
-
-<!-- PIN POPUP (OPTIONAL) -->
-<script>
-// Bouton Close
-document.getElementById("adultPinClose").onclick = () => {
-    document.getElementById("adultPinModal").style.display = "none";
-};
-
-// Bouton Unlock
-document.getElementById("adultPinUnlock").onclick = () => {
-    const pin = document.getElementById("adultPinInput").value;
-
-    if (pin === "062026") {
-        document.getElementById("adultPinModal").style.display = "none";
-    } else {
-        document.getElementById("adultPinError").style.display = "block";
-    }
-};
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-    // Playlist paj la (ranplase ak playlist paj la)
-    const playlist = window.mediaPlaylist;  
-    let index = 0;
-
-    const player = document.getElementById("mediaPlayer");
-    const source = document.getElementById("mediaSource");
-
-    function loadMedia(i) {
-        index = (i + playlist.length) % playlist.length;
-        source.src = playlist[index];
-        player.load();
-        player.play();
-    }
-
-    // NEXT
-    document.getElementById("nextBtn").addEventListener("click", () => {
-        loadMedia(index + 1);
-    });
-
-    // PREVIOUS
-    document.getElementById("prevBtn").addEventListener("click", () => {
-        loadMedia(index - 1);
-    });
-
-    // AUTO NEXT WHEN FINISHED
-    player.addEventListener("ended", () => {
-        loadMedia(index + 1);
-    });
-
-});
-
-document.getElementById("nextBtn").onclick = () => {
-    if (!window.mediaPlaylist.length) return;
-
-    window.currentIndex = (window.currentIndex + 1) % window.mediaPlaylist.length;
-    playMedia(window.mediaPlaylist[window.currentIndex]);
-};
-
-document.getElementById("prevBtn").onclick = () => {
-    if (!window.mediaPlaylist.length) return;
-
-    window.currentIndex = (window.currentIndex - 1 + window.mediaPlaylist.length) % window.mediaPlaylist.length;
-    playMedia(window.mediaPlaylist[window.currentIndex]);
-};
-
 </script>
 
 </body>

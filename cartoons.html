@@ -9,7 +9,7 @@
 
 <body>
 
-<!-- NAVBAR (LOGO + TIT AGOCH, SAN CARTOONS, SAN ADULTS) -->
+<!-- NAVBAR -->
 <div class="navbar">
     <div class="nav-left">
         <img src="logo-lmtv.png" class="nav-logo">
@@ -21,9 +21,9 @@
 <!-- PAGE WRAPPER -->
 <div class="section-wrapper">
 
-    <!-- TOP BAR: MENU + SEARCH -->
-<div class="top-bar">
-    <button class="menu-btn" id="menuBtn">☰ MENU</button>
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <button class="menu-btn" id="menuBtn">☰ MENU</button>
 
         <div class="inside" id="menuPanel">
             <a class="nav-item" href="index.html">🏠 HOME</a>
@@ -32,7 +32,6 @@
             <a class="nav-item" href="videos.html">🎞️ VIDEOS</a>
             <a class="nav-item" href="musics.html">🎵 MUSICS</a>
         </div>
-
 
         <div class="search-box">
             <input type="text" id="searchInput" placeholder="Search cartoons...">
@@ -44,16 +43,16 @@
     <div class="video-layout">
 
         <!-- PLAYER -->
-       <div class="player-box">
-           <video id="player" controls></video>
+        <div class="player-box">
+            <video id="player" controls></video>
 
-           <div class="media-controls">
-               <button id="prevBtn" class="media-btn">⏮</button>
-               <button id="nextBtn" class="media-btn">⏭</button>
-           </div>
-       </div>
+            <div class="media-controls">
+                <button id="prevBtn" class="media-btn">⏮</button>
+                <button id="nextBtn" class="media-btn">⏭</button>
+            </div>
+        </div>
 
-        <!-- RIGHT PANEL (FOLDERS + FILES) -->
+        <!-- RIGHT PANEL -->
         <div class="list-panel">
 
             <div class="list-header">
@@ -70,50 +69,14 @@
 
 </div>
 
+<!-- CARTOONS SECTION SCRIPT -->
 <script src="section-cartoons.js"></script>
 
-<!-- MENU TOGGLE SCRIPT -->
+<!-- MENU TOGGLE -->
 <script>
-document.getElementById("menuBtn").addEventListener("click", function() {
+document.getElementById("menuBtn").addEventListener("click", () => {
     document.getElementById("menuPanel").classList.toggle("show");
 });
-</script>
-
-<script>
-// ENTRO LOGO — JWE SELMAN LÈ SIT LA OUVRI
-document.addEventListener("DOMContentLoaded", () => {
-
-    if (!sessionStorage.getItem("introPlayed")) {
-
-        // kite intro a jwe pou 2.5s
-        setTimeout(() => {
-            document.querySelector(".intro-screen").classList.add("hide");
-        }, 2500);
-
-        // make intro a kòm jwe
-        sessionStorage.setItem("introPlayed", "yes");
-
-    } else {
-        // si intro a te jwe deja, pa montre li ankò
-        document.querySelector(".intro-screen").style.display = "none";
-    }
-
-});
-
-document.getElementById("nextBtn").onclick = () => {
-    if (!window.mediaPlaylist.length) return;
-
-    window.currentIndex = (window.currentIndex + 1) % window.mediaPlaylist.length;
-    playMedia(window.mediaPlaylist[window.currentIndex]);
-};
-
-document.getElementById("prevBtn").onclick = () => {
-    if (!window.mediaPlaylist.length) return;
-
-    window.currentIndex = (window.currentIndex - 1 + window.mediaPlaylist.length) % window.mediaPlaylist.length;
-    playMedia(window.mediaPlaylist[window.currentIndex]);
-};
-
 </script>
 
 </body>
