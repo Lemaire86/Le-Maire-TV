@@ -27,7 +27,7 @@ async function loadJSON() {
         fullData = await res.json();
         loadRoot();
     } catch (e) {
-        listContent.innerHTML = "<p style='padding:20px;'>⚠ Cannot load movies.json</p>";
+        listContent.innerHTML = "<p style='padding:20px;'>⚠ Cannot load movies</p>";
     }
 }
 
@@ -206,3 +206,21 @@ searchInput.addEventListener("input", () => {
 // INIT
 // -------------------------------
 loadJSON();
+
+
+// -------------------------------
+// NEXT / PREV
+// -------------------------------
+document.getElementById("nextBtn").onclick = () => {
+    if (!window.mediaPlaylist.length) return;
+
+    window.currentIndex = (window.currentIndex + 1) % window.mediaPlaylist.length;
+    playMedia(window.mediaPlaylist[window.currentIndex]);
+};
+
+document.getElementById("prevBtn").onclick = () => {
+    if (!window.mediaPlaylist.length) return;
+
+    window.currentIndex = (window.currentIndex - 1 + window.mediaPlaylist.length) % window.mediaPlaylist.length;
+    playMedia(window.mediaPlaylist[window.currentIndex]);
+};
