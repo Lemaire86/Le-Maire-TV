@@ -1,179 +1,226 @@
+// -------------------------------
+// CONFIG
+// -------------------------------
+const JSON_URL = "https://flat-violet-6492.jeanjuniorlemaire.workers.dev/?path=MUSICS/";
+
+let fullData = [];
+let currentPath = "";
+let currentList = [];
+let allItemsIndex = [];
+
 window.mediaPlaylist = [];
 window.currentIndex = 0;
 
-/* ===========================
-   MUSICS SYSTEM (LOCAL PC)
-=========================== */
-
-const SERVER = "https://pub-4709698d6dbd40c2bb4d7bac2256dc4d.r2.dev";
-const ROOT = SERVER + "/server-lmtv/MUSICS/";
-
-let currentPath = ROOT;
-
 const listContent = document.getElementById("listContent");
 const player = document.getElementById("player");
-const musicThumb = document.getElementById("musicThumb");
-const currentPathLabel = document.getElementById("currentPathLabel");
+const pathLabel = document.getElementById("currentPathLabel");
+const searchInput = document.getElementById("searchInput");
+const suggestionsBox = document.getElementById("searchSuggestions");
 
-/* ===========================
-   READ LOCAL FOLDER
-=========================== */
-async function readFolder(url) {
+
+// -------------------------------
+// LOAD JSON
+// -------------------------------
+async function loadJSON() {
     try {
-        const res = await fetch(url);
-        const text = await res.text();
-
-        const parser = new DOMParser();
-        const html = parser.parseFromString(text, "text/html");
-        const links = [...html.querySelectorAll("a")];
-
-        let items = [];
-
-        links.forEach(a => {
-            const name = a.textContent.trim();
-            if (name === "../") return;
-
-            if (name.endsWith("/")) {
-                items.push({
-                    type: "folder",
-                    name,
-                    path: url + name
-                });
-            } else if (
-                name.endsWith(".mp3") ||
-                name.endsWith(".wav") ||
-                name.endsWith(".ogg") ||
-                name.endsWith(".m4a")
-            ) {
-                items.push({
-                    type: "audio",
-                    name,
-                    path: url + name
-                });
-            }
-        });
-
-        return items;
-
-    } catch (err) {
-        console.error("Folder read error:", err);
-        return [];
+        const res = await fetch(JSON_URL);
+        fullData = await res.json();
+        loadRoot();
+    } catch (e) {
+        listContent.innerHTML = "<p style='padding:20px;'>⚠ Cannot load musics</p>";
     }
 }
 
-/* ===========================
-   RENDER LIST
-=========================== */
-async function render() {
-    currentPathLabel.textContent = currentPath.replace(ROOT, "");
 
-    const items = await readFolder(currentPath);
+// -------------------------------
+// LOAD ROOT
+// -------------------------------
+function loadRoot() {
+    currentPath = "";
+    pathLabel.textContent = "/";
 
+    const rootItems = fullData.filter(item => !item.path.includes("/", 1));
+    renderList(rootItems);
+}
+
+
+// -------------------------------
+// OPEN FOLDER
+// -------------------------------
+function openFolder(path) {
+    currentPath = path;
+    pathLabel.textContent = "/" + path;
+
+    const folderItems = fullData.filter(item => item.path.startsWith(path));
+    renderList(folderItems);
+}
+
+
+// -------------------------------
+// RENDER LIST
+// -------------------------------
+function renderList(list) {
     listContent.innerHTML = "";
-    window.mediaPlaylist = [];
+    currentList = list;
 
-    if (items.length === 0) {
-        listContent.innerHTML = "<p>No files found</p>";
+    window.mediaPlaylist = [];
+    allItemsIndex = [];
+
+    list.forEach(item => {
+        if (item.type === "folder") {
+            addFolderCard(item);
+        } else if (item.type === "file") {
+            addFileCard(item);
+            window.mediaPlaylist.push(item.url);
+            indexItem(item);
+        }
+    });
+}
+
+
+// -------------------------------
+// FOLDER CARD
+// -------------------------------
+function addFolderCard(item) {
+    const div = document.createElement("div");
+    div.className = "item-card";
+    div.innerHTML = `
+        <div class="item-title">📁 ${item.name}</div>
+        <div class="item-sub" id="count-${item.path}">Loading...</div>
+    `;
+    div.onclick = () => openFolder(item.path);
+    listContent.appendChild(div);
+
+    countFiles(item.path);
+}
+
+
+// -------------------------------
+// FILE CARD
+// -------------------------------
+function addFileCard(item) {
+    const div = document.createElement("div");
+    div.className = "item-card";
+    div.innerHTML = `
+        <div class="item-title">🎵 ${item.name}</div>
+    `;
+    div.onclick = () => playMedia(item.url);
+    listContent.appendChild(div);
+}
+
+
+// -------------------------------
+// COUNT FILES IN FOLDER
+// -------------------------------
+function countFiles(path) {
+    const count = fullData.filter(
+        x => x.type === "file" && x.path.startsWith(path)
+    ).length;
+
+    const label = document.getElementById("count-" + path);
+    if (label) label.textContent = `${count} file(s)`;
+}
+
+
+// -------------------------------
+// PLAY MEDIA
+// -------------------------------
+function playMedia(url) {
+    player.src = url;
+    player.load();
+    player.play();
+
+    window.currentIndex = window.mediaPlaylist.indexOf(url);
+}
+
+
+// -------------------------------
+// BACK
+// -------------------------------
+document.getElementById("btnBack").onclick = () => {
+    if (!currentPath.includes("/")) {
+        loadRoot();
         return;
     }
 
-    items.forEach((item, i) => {
-        const div = document.createElement("div");
-        div.className = "item-card";
+    const parts = currentPath.split("/").filter(Boolean);
+    parts.pop();
+    const newPath = parts.join("/") + "/";
 
-        if (item.type === "folder") {
-            div.innerHTML = `<div class="item-title">📁 ${item.name}</div>`;
-            div.onclick = () => {
-                currentPath = item.path;
-                render();
-            };
-        }
+    openFolder(newPath);
+};
 
-        if (item.type === "audio") {
-            div.innerHTML = `<div class="item-title">🎵 ${item.name}</div>`;
-            div.onclick = () => playMusic(item.path);
 
-            // ADD TO PLAYLIST
-            window.mediaPlaylist.push(item.path);
-        }
+// -------------------------------
+// ROOT
+// -------------------------------
+document.getElementById("btnRoot").onclick = loadRoot;
 
-        listContent.appendChild(div);
+
+// -------------------------------
+// SEARCH INDEX
+// -------------------------------
+function indexItem(item) {
+    allItemsIndex.push({
+        name: item.name,
+        url: item.url,
+        lower: item.name.toLowerCase()
     });
 }
 
-/* ===========================
-   PLAY MUSIC
-=========================== */
-function playMusic(fullPath) {
-    player.src = fullPath;
-    player.play().catch(()=>{});
 
-    window.currentIndex = window.mediaPlaylist.indexOf(fullPath);
+// -------------------------------
+// SEARCH
+// -------------------------------
+searchInput.addEventListener("input", () => {
+    const q = searchInput.value.toLowerCase();
 
-    // THUMBNAIL
-    let base = fullPath.replace(/\.[^/.]+$/, "");
-    let jpg = base + ".jpg";
-    let png = base + ".png";
-
-    fetch(jpg).then(r => {
-        if (r.ok) musicThumb.style.backgroundImage = `url('${jpg}')`;
-        else {
-            fetch(png).then(r2 => {
-                if (r2.ok) musicThumb.style.backgroundImage = `url('${png}')`;
-                else musicThumb.style.backgroundImage = "url('assets/music-default.jpg')";
-            });
-        }
-    });
-}
-
-/* ===========================
-   BACK BUTTON
-=========================== */
-document.getElementById("btnBack").onclick = () => {
-    if (currentPath !== ROOT) {
-        let parts = currentPath.replace(ROOT, "").split("/").filter(Boolean);
-        parts.pop();
-        currentPath = parts.length ? ROOT + parts.join("/") + "/" : ROOT;
-        render();
+    if (!q) {
+        suggestionsBox.style.display = "none";
+        return;
     }
-};
 
-/* ===========================
-   ROOT BUTTON
-=========================== */
-document.getElementById("btnRoot").onclick = () => {
-    currentPath = ROOT;
-    render();
-};
+    const matches = allItemsIndex.filter(x => x.lower.includes(q)).slice(0, 20);
 
-/* ===========================
-   NEXT / PREVIOUS
-=========================== */
+    if (!matches.length) {
+        suggestionsBox.style.display = "none";
+        return;
+    }
+
+    suggestionsBox.innerHTML = "";
+    matches.forEach(m => {
+        const div = document.createElement("div");
+        div.textContent = m.name;
+        div.onclick = () => {
+            suggestionsBox.style.display = "none";
+            playMedia(m.url);
+        };
+        suggestionsBox.appendChild(div);
+    });
+
+    suggestionsBox.style.display = "block";
+});
+
+
+// -------------------------------
+// INIT
+// -------------------------------
+loadJSON();
+
+
+// -------------------------------
+// NEXT / PREV
+// -------------------------------
 document.getElementById("nextBtn").onclick = () => {
     if (!window.mediaPlaylist.length) return;
 
     window.currentIndex = (window.currentIndex + 1) % window.mediaPlaylist.length;
-    playMusic(window.mediaPlaylist[window.currentIndex]);
+    playMedia(window.mediaPlaylist[window.currentIndex]);
 };
 
 document.getElementById("prevBtn").onclick = () => {
     if (!window.mediaPlaylist.length) return;
 
     window.currentIndex = (window.currentIndex - 1 + window.mediaPlaylist.length) % window.mediaPlaylist.length;
-    playMusic(window.mediaPlaylist[window.currentIndex]);
+    playMedia(window.mediaPlaylist[window.currentIndex]);
 };
-
-/* ===========================
-   AUTO NEXT
-=========================== */
-player.addEventListener("ended", () => {
-    if (!window.mediaPlaylist.length) return;
-
-    window.currentIndex = (window.currentIndex + 1) % window.mediaPlaylist.length;
-    playMusic(window.mediaPlaylist[window.currentIndex]);
-});
-
-/* ===========================
-   INIT
-=========================== */
-render();
