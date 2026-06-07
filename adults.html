@@ -18,6 +18,21 @@
     <div class="nav-right"></div>
 </div>
 
+<!-- LOGOUT BUTTON -->
+<button onclick="logoutAdult()" style="margin-top:75px; margin-left:20px;">Logout</button>
+
+<!-- ============================
+     PIN OVERLAY (MUST BE FIRST)
+============================ -->
+<div id="pinOverlay" class="pin-overlay">
+    <div class="pin-box">
+        <h2>Enter PIN</h2>
+        <input type="password" id="pinInput" maxlength="4" placeholder="****">
+        <button id="pinSubmit">Unlock</button>
+        <p id="pinError" class="pin-error"></p>
+    </div>
+</div>
+
 <!-- PAGE WRAPPER -->
 <div class="section-wrapper">
 
@@ -70,7 +85,29 @@
 
 </div>
 
-<!-- ADULTS SECTION SCRIPT (WORKER + R2) -->
+<!-- ============================
+     PIN SCRIPT (AFTER HTML)
+============================ -->
+<script>
+const CORRECT_PIN = "2026";
+
+if (localStorage.getItem("adultAccess") !== "true") {
+    document.getElementById("pinOverlay").style.display = "flex";
+}
+
+document.getElementById("pinSubmit").onclick = () => {
+    const pin = document.getElementById("pinInput").value;
+
+    if (pin === CORRECT_PIN) {
+        localStorage.setItem("adultAccess", "true");
+        document.getElementById("pinOverlay").style.display = "none";
+    } else {
+        document.getElementById("pinError").textContent = "Incorrect PIN";
+    }
+};
+</script>
+
+<!-- ADULTS SECTION SCRIPT -->
 <script src="section-adults.js"></script>
 
 <!-- MENU TOGGLE -->
@@ -78,6 +115,14 @@
 document.getElementById("menuBtn").addEventListener("click", () => {
     document.getElementById("menuPanel").classList.toggle("show");
 });
+</script>
+
+<!-- LOGOUT FUNCTION -->
+<script>
+function logoutAdult() {
+    localStorage.removeItem("adultAccess");
+    location.reload();
+}
 </script>
 
 </body>
