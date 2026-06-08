@@ -1,16 +1,6 @@
 #EXTM3U
-{
-  "name": "Le Maire TV",
-  "logo": "https://lemairetv.com/logo.png",
-  "country": "HT",
-  "category": "Live TV",
-  "type": "youtube",
-  "id": "H1LkeYMqKj0",
-  "url": "https://www.youtube.com/embed/H1LkeYMqKj0?autoplay=1&mute=0",
-  "quality": "1080p",
-  "status": "LIVE"
-}
-
+#EXTINF:-1 tvg-id="LeMaireTV" tvg-name="Le Maire TV" tvg-logo="https://lemairetv.com/logo.png" group-title="Haiti",Le Maire TV (LIVE)
+https://www.youtube.com/embed/H1LkeYMqKj0?autoplay=1&mute=0
 #EXTINF:24,BPX TV Radio
 #EXTVLCOPT:network-caching=1000
 https://video1.getstreamhosting.com:1936/8212/8212/playlist.m3u8
