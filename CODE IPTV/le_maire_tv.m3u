@@ -1,6 +1,6 @@
 #EXTM3U
 #EXTINF:-1 tvg-id="LMTV" tvg-name="LMTV" tvg-logo="https://raw.githubusercontent.com/Lemaire86/lemairetv/main/assets/logo.png" group-title="LMTV", LMTV
-https://avoid-small-perl-kit.trycloudflare.com/hls/master.m3u8
+https://lmtv.lemairetv.uk/hls/master.m3u8
 #EXTINF:24,Disney Jr. (1080p)
 #EXTVLCOPT:network-caching=1000
 http://151.80.18.177:86/Disney_Junior_HD/index.m3u8
